@@ -22,8 +22,13 @@ fi
 
 # Function to create a zip backup of the source directory
 function create_backup {
-    zip -r "${backup_dir}/backups_${timestamp}.zip" "${source_dir}"
+    zip_file="${backup_dir}/backups_${timestamp}.zip"
+    zip -r "$zip_file" "$source_dir"
     echo "Backup complete for ${timestamp}"
+
+  # Upload entire backup directory to S3 using sync
+    aws s3 sync "$backup_dir" s3://bucket_name
+    echo "Sync to S3 complete."
 }
 
 # Function to keep only the latest 5 backups (delete older folder/files)
