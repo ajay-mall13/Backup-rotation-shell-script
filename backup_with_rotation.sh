@@ -26,7 +26,7 @@ function create_backup {
     echo "Backup complete for ${timestamp}"
 }
 
-# Function to keep only the latest 5 backups (delete older ones)
+# Function to keep only the latest 5 backups (delete older folder/files)
 function perform_rotation {
     backups=($(ls -t "${backup_dir}/backups_"*.zip 2>/dev/null))
 
